@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,6 +30,25 @@
     .button .emoji { font-size: 1.1rem; line-height: 1; }
     .project-note { color: #666; font-size: 0.98rem; }
     .section img { border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,.08); }
+    .venue-badge {
+      display: inline-block;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      padding: 0.18rem 0.72rem;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #ffedd5 0%, #fce7f3 50%, #e0e7ff 100%);
+      color: #7c2d12;
+      box-shadow: 0 1px 8px rgba(0,0,0,.08);
+    }
+    .venue-badge .highlight-word {
+      background: linear-gradient(90deg, #ef4444 0%, #f59e0b 45%, #8b5cf6 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 800;
+    }
+    .section p + img,
+    .section ul + img { margin-top: 1rem; }
   </style>
 </head>
 <body>
@@ -54,7 +74,7 @@
           <div class="subtitle is-size-5">
             <sup>1</sup>Huazhong University of Science and Technology &nbsp;
             <sup>2</sup>Huawei Inc.<br>
-            <span class="project-note">CVPR 2026 Highlight</span>
+            <span class="venue-badge">CVPR 2026 <span class="highlight-word">Highlight</span></span>
           </div>
 
           <div class="column has-text-centered">
@@ -62,13 +82,6 @@
               <a href="https://arxiv.org/pdf/2604.12812" class="external-link button is-normal is-rounded is-dark">
                 <span class="icon"><i class="fas fa-file-pdf"></i></span>
                 <span>Paper</span>
-              </a>
-            </span>
-
-            <span class="link-block">
-              <a href="https://arxiv.org/abs/2604.12812" class="external-link button is-normal is-rounded is-dark">
-                <span class="icon"><i class="ai ai-arxiv"></i></span>
-                <span>arXiv</span>
               </a>
             </span>
 
@@ -100,10 +113,7 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Existing Multimodal Large Language Models (MLLMs) suffer from significant performance degradation on long document understanding as document length increases.
-            DocSeeker addresses this challenge with an <strong>Analysis–Localization–Reasoning (ALR)</strong> paradigm that first analyzes the question, then localizes evidence pages, and finally performs grounded reasoning before producing the answer.
-            To learn this behavior effectively, DocSeeker combines <strong>ALR CoT distillation</strong>, <strong>Evidence-aware GRPO</strong>, and <strong>Evidence-Guided Resolution Allocation (EGRA)</strong>.
-            The resulting model achieves strong gains on both in-domain and out-of-domain benchmarks, improves interpretability through explicit evidence grounding, and integrates naturally with visual RAG pipelines.
+            Existing Multimodal Large Language Models (MLLMs) suffer from significant performance degradation on the long document understanding task as document length increases. This stems from two fundamental challenges: <strong>(1) a low Signal-to-Noise Ratio (SNR)</strong>, where crucial evidence is easily buried among irrelevant pages, and <strong>(2) supervision scarcity</strong>, since datasets that provide only final short answers offer a weak learning signal. In this paper, we address these challenges by introducing a paradigm that requires the model to execute a structured <strong>Analysis–Localization–Reasoning</strong> workflow. To instill this capability, we design a two-stage training framework. We first perform supervised fine-tuning on high-quality data generated through an efficient knowledge distillation strategy. We then employ <strong>Evidence-aware Group Relative Policy Optimization</strong> to jointly optimize evidence localization and answer accuracy. In addition, we introduce an <strong>Evidence-Guided Resolution Allocation</strong> strategy to mitigate the memory constraints of training on multi-page documents. Extensive experiments show that DocSeeker achieves superior performance on both in-domain and out-of-domain benchmarks. The model generalizes robustly from short-page training to ultra-long documents and works naturally with visual Retrieval-Augmented Generation systems, providing a strong foundation for building practical long-document reasoning pipelines.
           </p>
         </div>
       </div>
@@ -117,12 +127,13 @@
       <div class="column is-full-width">
         <h2 class="title is-3">Method</h2>
         <div class="content has-text-justified">
-          <img src="./static/images/framework.png" alt="DocSeeker framework">
-          <p class="result-caption">
-            <strong>Training overview.</strong> Stage I injects the ALR reasoning paradigm through supervised fine-tuning on distilled ALR chain-of-thought data.
-            Stage II applies <strong>Evidence-aware GRPO</strong> to jointly optimize output format, evidence localization, and answer accuracy.
-            During training, <strong>EGRA</strong> preserves high resolution for evidence pages while reducing computation on non-evidence pages.
+          <p>
+            <strong>DocSeeker follows a structured visual reasoning pipeline.</strong> Instead of directly predicting an answer from a long document, the model is trained to first analyze the question, then localize the most relevant evidence pages, and finally perform grounded reasoning over the identified evidence. This explicit reasoning path improves interpretability and helps the model resist the heavy noise introduced by long multi-page inputs.
           </p>
+          <p>
+            <strong>Training proceeds in two stages.</strong> Stage I injects the ALR reasoning paradigm through supervised fine-tuning on distilled ALR chain-of-thought data. Stage II applies <strong>Evidence-aware GRPO</strong> to jointly optimize output format, evidence localization, and final answer accuracy. During training, <strong>EGRA</strong> keeps evidence pages at high resolution while selectively reducing computation on non-evidence pages, enabling more efficient long-document learning without sacrificing critical visual details.
+          </p>
+          <img src="./static/images/framework.png" alt="DocSeeker framework">
         </div>
       </div>
     </div>
@@ -135,17 +146,13 @@
       <div class="column is-full-width">
         <h2 class="title is-3">Main Results</h2>
         <div class="content has-text-justified">
+          <p>
+            <strong>DocSeeker delivers consistent gains across both in-domain and out-of-domain benchmarks.</strong> Compared with the same 7B baseline, it achieves clear improvements on DUDE, MP-DocVQA, MMLongBench-doc, LongDocURL, and SlideVQA. These results indicate that the proposed ALR reasoning paradigm and evidence-aware optimization strategy substantially strengthen long-document understanding and generalization.
+          </p>
+          <p>
+            <strong>Beyond raw accuracy, DocSeeker is also more robust.</strong> It remains effective when document length grows, preserves strong evidence localization ability in noisy contexts, and stays competitive with leading commercial systems. This makes it a practical foundation for building reliable long-document reasoning and visual RAG pipelines.
+          </p>
           <img src="./static/images/benchmark_table.png" alt="Benchmark comparison">
-          <p class="result-caption">
-            <strong>Benchmark comparison.</strong> DocSeeker improves over the same 7B baseline across DUDE, MP-DocVQA, MMLongBench-doc, LongDocURL, and SlideVQA, and remains competitive with strong commercial systems.
-          </p>
-
-          <br>
-
-          <img src="./static/images/length_rag.png" alt="Length robustness and RAG integration">
-          <p class="result-caption">
-            <strong>Robustness to document length and retrieval noise.</strong> DocSeeker remains more stable as context length grows and shows strong synergy with visual retrieval by tolerating noisier retrieved page sets.
-          </p>
         </div>
       </div>
     </div>
@@ -159,9 +166,9 @@
         <h2 class="title is-3">Highlights</h2>
         <div class="content has-text-justified">
           <ul>
-            <li><strong>ALR reasoning paradigm:</strong> transforms long-document QA from direct answer prediction into an explicit evidence-grounded reasoning workflow.</li>
-            <li><strong>Evidence-grounded training:</strong> combines distilled ALR CoT supervision and Evidence-aware GRPO to optimize both localization and answer quality.</li>
-            <li><strong>Efficient long-document learning:</strong> EGRA allocates visual resolution according to evidence relevance to improve scalability during training.</li>
+            <li><strong>Structured ALR reasoning:</strong> reformulates long-document question answering as an explicit workflow of question analysis, evidence localization, and grounded reasoning.</li>
+            <li><strong>Evidence-aware training:</strong> combines distilled ALR supervision with Evidence-aware GRPO to improve both page localization and final answer quality.</li>
+            <li><strong>Efficient long-context learning:</strong> EGRA allocates image resolution according to evidence relevance, improving training scalability while preserving key visual details.</li>
           </ul>
         </div>
       </div>
