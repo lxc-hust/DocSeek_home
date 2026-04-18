@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>DocSeeker: Structured Visual Reasoning with Evidence Grounding for Long Document Understanding</title>
+  <meta name="description" content="Project page for DocSeeker, a long-document understanding MLLM with Analysis-Localization-Reasoning, Evidence-aware GRPO, and EGRA.">
+  <meta name="keywords" content="DocSeeker, long document understanding, multimodal large language model, document VQA, ALR, evidence grounding">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <style>
+    .result-caption { margin-top: 0.75rem; }
+    .hero .publication-title { line-height: 1.15; }
+    .button .emoji { font-size: 1.1rem; line-height: 1; }
+    .project-note { color: #666; font-size: 0.98rem; }
+    .section img { border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,.08); }
+  </style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">DocSeeker: Structured Visual Reasoning with Evidence Grounding for Long Document Understanding</h1>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Hao Yan<sup>1</sup>,</span>
+            <span class="author-block">Yuliang Liu<sup>1*</sup>,</span>
+            <span class="author-block">Xingchen Liu<sup>1</sup>,</span>
+            <span class="author-block">Yuyi Zhang<sup>1</sup>,</span>
+            <span class="author-block">Minghui Liao<sup>2</sup>,</span>
+            <span class="author-block">Jihao Wu<sup>2</sup>,</span>
+            <span class="author-block">Wei Chen<sup>1*</sup>,</span>
+            <span class="author-block">Xiang Bai<sup>1</sup></span>
+          </div>
+
+          <div class="subtitle is-size-5">
+            <sup>1</sup>Huazhong University of Science and Technology &nbsp;
+            <sup>2</sup>Huawei Inc.<br>
+            <span class="project-note">CVPR 2026 Highlight</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <span class="link-block">
+              <a href="https://arxiv.org/pdf/2604.12812" class="external-link button is-normal is-rounded is-dark">
+                <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                <span>Paper</span>
+              </a>
+            </span>
+
+            <span class="link-block">
+              <a href="https://arxiv.org/abs/2604.12812" class="external-link button is-normal is-rounded is-dark">
+                <span class="icon"><i class="ai ai-arxiv"></i></span>
+                <span>arXiv</span>
+              </a>
+            </span>
+
+            <span class="link-block">
+              <a href="https://github.com/yh-hust/DocSeeker" class="external-link button is-normal is-rounded is-dark">
+                <span class="icon"><i class="fab fa-github"></i></span>
+                <span>Code</span>
+              </a>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+          <img src="./static/images/overview.png" alt="DocSeeker overview figure">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Existing Multimodal Large Language Models (MLLMs) suffer from significant performance degradation on long document understanding as document length increases.
+            DocSeeker addresses this challenge with an <strong>Analysis–Localization–Reasoning (ALR)</strong> paradigm that first analyzes the question, then localizes evidence pages, and finally performs grounded reasoning before producing the answer.
+            To learn this behavior effectively, DocSeeker combines <strong>ALR CoT distillation</strong>, <strong>Evidence-aware GRPO</strong>, and <strong>Evidence-Guided Resolution Allocation (EGRA)</strong>.
+            The resulting model achieves strong gains on both in-domain and out-of-domain benchmarks, improves interpretability through explicit evidence grounding, and integrates naturally with visual RAG pipelines.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Method</h2>
+        <div class="content has-text-justified">
+          <img src="./static/images/framework.png" alt="DocSeeker framework">
+          <p class="result-caption">
+            <strong>Training overview.</strong> Stage I injects the ALR reasoning paradigm through supervised fine-tuning on distilled ALR chain-of-thought data.
+            Stage II applies <strong>Evidence-aware GRPO</strong> to jointly optimize output format, evidence localization, and answer accuracy.
+            During training, <strong>EGRA</strong> preserves high resolution for evidence pages while reducing computation on non-evidence pages.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Main Results</h2>
+        <div class="content has-text-justified">
+          <img src="./static/images/benchmark_table.png" alt="Benchmark comparison">
+          <p class="result-caption">
+            <strong>Benchmark comparison.</strong> DocSeeker improves over the same 7B baseline across DUDE, MP-DocVQA, MMLongBench-doc, LongDocURL, and SlideVQA, and remains competitive with strong commercial systems.
+          </p>
+
+          <br>
+
+          <img src="./static/images/length_rag.png" alt="Length robustness and RAG integration">
+          <p class="result-caption">
+            <strong>Robustness to document length and retrieval noise.</strong> DocSeeker remains more stable as context length grows and shows strong synergy with visual retrieval by tolerating noisier retrieved page sets.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Highlights</h2>
+        <div class="content has-text-justified">
+          <ul>
+            <li><strong>ALR reasoning paradigm:</strong> transforms long-document QA from direct answer prediction into an explicit evidence-grounded reasoning workflow.</li>
+            <li><strong>Evidence-grounded training:</strong> combines distilled ALR CoT supervision and Evidence-aware GRPO to optimize both localization and answer quality.</li>
+            <li><strong>Efficient long-document learning:</strong> EGRA allocates visual resolution according to evidence relevance to improve scalability during training.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+<pre><code>@inproceedings{yan2026docseeker,
+  title     = {DocSeeker: Structured Visual Reasoning with Evidence Grounding for Long Document Understanding},
+  author    = {Hao Yan and Yuliang Liu and Xingchen Liu and Yuyi Zhang and Minghui Liao and Jihao Wu and Wei Chen and Xiang Bai},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  year      = {2026}
+}</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <p>
+        This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+      </p>
+      <p>
+        Template adapted from <a href="https://nerfies.github.io/">Nerfies</a>.
+      </p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
