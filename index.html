@@ -32,6 +32,7 @@
     .section img { border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,.08); }
     .venue-badge {
       display: inline-block;
+      margin-top: 16px;
       font-weight: 700;
       letter-spacing: 0.01em;
       padding: 0.18rem 0.72rem;
@@ -49,6 +50,13 @@
     }
     .section p + img,
     .section ul + img { margin-top: 1rem; }
+    .hero-abstract {
+      margin-top: 2rem;
+      padding: 1.5rem 1.75rem;
+      border-radius: 16px;
+      background: #fbfbfc;
+      box-shadow: 0 2px 12px rgba(0,0,0,.05);
+    }
   </style>
 </head>
 <body>
@@ -97,6 +105,19 @@
 
       <div class="columns is-centered">
         <div class="column is-four-fifths">
+          <div class="hero-abstract">
+            <h2 class="title is-3 has-text-centered">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>
+                Existing Multimodal Large Language Models (MLLMs) suffer from significant performance degradation on the long document understanding task as document length increases. This stems from two fundamental challenges: <strong>(1) a low Signal-to-Noise Ratio (SNR)</strong>, where crucial evidence is easily buried among irrelevant pages, and <strong>(2) supervision scarcity</strong>, since datasets that provide only final short answers offer a weak learning signal. In this paper, we address these challenges by introducing a paradigm that requires the model to execute a structured <strong>Analysis–Localization–Reasoning</strong> workflow. To instill this capability, we design a two-stage training framework. We first perform supervised fine-tuning on high-quality data generated through an efficient knowledge distillation strategy. We then employ <strong>Evidence-aware Group Relative Policy Optimization</strong> to jointly optimize evidence localization and answer accuracy. In addition, we introduce an <strong>Evidence-Guided Resolution Allocation</strong> strategy to mitigate the memory constraints of training on multi-page documents. Extensive experiments show that DocSeeker achieves superior performance on both in-domain and out-of-domain benchmarks. The model generalizes robustly from short-page training to ultra-long documents and works naturally with visual Retrieval-Augmented Generation systems, providing a strong foundation for building practical long-document reasoning pipelines.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
           <img src="./static/images/overview.png" alt="DocSeeker overview figure">
         </div>
       </div>
@@ -105,21 +126,6 @@
 </section>
 
 <hr>
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p>
-            Existing Multimodal Large Language Models (MLLMs) suffer from significant performance degradation on the long document understanding task as document length increases. This stems from two fundamental challenges: <strong>(1) a low Signal-to-Noise Ratio (SNR)</strong>, where crucial evidence is easily buried among irrelevant pages, and <strong>(2) supervision scarcity</strong>, since datasets that provide only final short answers offer a weak learning signal. In this paper, we address these challenges by introducing a paradigm that requires the model to execute a structured <strong>Analysis–Localization–Reasoning</strong> workflow. To instill this capability, we design a two-stage training framework. We first perform supervised fine-tuning on high-quality data generated through an efficient knowledge distillation strategy. We then employ <strong>Evidence-aware Group Relative Policy Optimization</strong> to jointly optimize evidence localization and answer accuracy. In addition, we introduce an <strong>Evidence-Guided Resolution Allocation</strong> strategy to mitigate the memory constraints of training on multi-page documents. Extensive experiments show that DocSeeker achieves superior performance on both in-domain and out-of-domain benchmarks. The model generalizes robustly from short-page training to ultra-long documents and works naturally with visual Retrieval-Augmented Generation systems, providing a strong foundation for building practical long-document reasoning pipelines.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <section class="section">
   <div class="container is-max-desktop">
